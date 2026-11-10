@@ -4,14 +4,13 @@ import com.app.todoapp.models.Task;
 import com.app.todoapp.services.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 //tells spring boot this is a controller and all endpoints are over here
 @Controller
-@RequestMapping("/tasks")
+//@RequestMapping("/tasks")
 public class TaskController {
     private final TaskService taskService;
 
@@ -24,4 +23,21 @@ public class TaskController {
         model.addAttribute("tasks", tasks);
         return "tasks";
     }
+    @PostMapping
+    public String createTask(@RequestParam String title){
+        taskService.createTask(title);
+        return "redirect:/";//for refreshing list after adding
+    }
+    @GetMapping("/{id}/delete")
+    public String deleteTask(@PathVariable Long id){
+        taskService.deleteTask(id);
+        return "redirect:/";
+    }
+    @GetMapping("/{id}/toggle")
+    public String toggleTask(@PathVariable Long id){
+        taskService.toggleTask(id);
+        return "redirect:/";
+    }
+
+
 }
