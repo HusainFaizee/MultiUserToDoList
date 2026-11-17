@@ -6,7 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.Locale;
 
 //tells spring boot this is a controller and all endpoints are over here
 @Controller
@@ -21,6 +25,12 @@ public class TaskController {
     public String getTasks(Model model){
         List<Task> tasks = taskService.getAllTasks();
         model.addAttribute("tasks", tasks);
+        LocalDate today = LocalDate.now(ZoneId.of("Europe/Berline"));
+
+        String formattedDate = today.format(
+                DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale.ENGLISH)
+        );
+        model.addAttribute("today", formattedDate);
         return "tasks";
     }
     @PostMapping
