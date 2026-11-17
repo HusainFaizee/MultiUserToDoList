@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 public class Task {
@@ -14,4 +16,5 @@ public class Task {
     private long id;
     private String title;
     private boolean completed;
+    private LocalDateTime completedAt;
 }

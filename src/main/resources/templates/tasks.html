@@ -15,9 +15,12 @@
 
 <div class="container"> <!-- "/" is for which url it is for -->
     <h1 class="mt-5 text-center"> ToDo Application</h1>
+    <p class="text-center text-muted"
+       th:text="${today}">
+    </p>
     <form action="/" method="post" class="row mt-3">
         <div class="col-md-10">
-            <input class = "form-control form-control-lg"  type="text" name="title" placeholder="Add a new task..." required
+            <input class = "form-control form-control-lg"  type="text" name="title" placeholder="Add a new task..." required>
         </div>
         <div class="col-md-2">
             <button type="submit" class="btn btn-primary btn-lg btn-block">Add Task</button>
@@ -28,6 +31,9 @@
             <div class="card mb-2">
                 <div class="card-body d-flex justify-content-between align-items-left">
                     <span th:classappend="${task.completed} ? 'text-strikethrough'" th:text="${task.title}">Task Title</span>
+                    <small class="text-muted d-block"
+                           th:if="${task.completed and task.completedAt != null}"
+                           th:text="'Done at ' + ${#temporals.format(task.completedAt, 'dd MMM yyyy, HH:mm')}"> </small>
                     <div><!-- "$" means variable apparently-->
                         <a th:href ="@{/{id}/toggle(id=${task.id})}" class="btn btn-outline-secondary btn-sm align-items-right">Toggle</a>
                         <a th:href ="@{/{id}/delete(id=${task.id})}" class="btn btn-outline-danger btn-sm align-items-right">Delete</a>

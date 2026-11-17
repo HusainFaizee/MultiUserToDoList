@@ -25,7 +25,7 @@ public class TaskController {
     public String getTasks(Model model){
         List<Task> tasks = taskService.getAllTasks();
         model.addAttribute("tasks", tasks);
-        LocalDate today = LocalDate.now(ZoneId.of("Europe/Berline"));
+        LocalDate today = LocalDate.now(ZoneId.of("Europe/Berlin"));
 
         String formattedDate = today.format(
                 DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale.ENGLISH)

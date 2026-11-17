@@ -4,6 +4,7 @@ import com.app.todoapp.models.Task;
 import com.app.todoapp.respository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 //so spring boot knows that this is a service, enables injection of constructor during runtime
@@ -33,7 +34,13 @@ public class TaskService {
     public void toggleTask(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid task id"));
-        task.setCompleted(!task.isCompleted());
+        if(task.isCompleted()){
+            task.setCompleted(false);
+            task.setCompletedAt(null);
+        } else{
+            task.setCompleted(true);
+            task.setCompletedAt(LocalDateTime.now());
+        }
         taskRepository.save(task);
     }
 }
