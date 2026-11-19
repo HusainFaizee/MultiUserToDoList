@@ -33,6 +33,6 @@ Run the application using Maven or IntelliJ IDEA.<br>
 Open http://localhost:8080/users in your browser.<br>
 
 Future Improvements:
-Spring Security authentication and authorization.
-Database-backed user accounts.
-User-specific access control.
+Spring Security authentication and authorization.<br>
+Database-backed user accounts.<br>
+User-specific access control.<br>
