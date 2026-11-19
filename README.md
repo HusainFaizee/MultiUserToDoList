@@ -1,5 +1,5 @@
 # MultiUserToDoList
-A web-based task management application using Java and Spring Boot with persistent MySQL storage, with mutiple users and completion timestamps.
+A web-based task management application using Java and Spring Boot with persistent MySQL storage, with mutiple users and completion timestamps.<br>
 Features:<br>
 Multiple User Profiles:<br>
 Create and select different user profiles.<br>
