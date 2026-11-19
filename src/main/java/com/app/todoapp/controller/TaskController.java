@@ -14,7 +14,7 @@ import java.util.Locale;
 
 //tells spring boot this is a controller and all endpoints are over here
 @Controller
-//@RequestMapping("/tasks")
+@RequestMapping("/tasks")
 public class TaskController {
     private final TaskService taskService;
 
