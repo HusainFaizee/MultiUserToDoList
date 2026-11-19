@@ -1,6 +1,8 @@
 package com.app.todoapp.services;
 
+import com.app.todoapp.models.AppUser;
 import com.app.todoapp.models.Task;
+import com.app.todoapp.respository.AppUserRepository;
 import com.app.todoapp.respository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,11 @@ import java.util.List;
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final AppUserRepository appUserRepository;
 
-    public TaskService(TaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository,AppUserRepository appUserRepository) {
         this.taskRepository = taskRepository;
+        this.appUserRepository = appUserRepository;
     }
 
     public List<Task> getAllTasks() {
@@ -47,4 +51,16 @@ public class TaskService {
     public List<Task> getTasksByUser(Long userId){
         return taskRepository.findByUserId(userId);
     }
+
+    public void addTask(String title, Long userId){
+        AppUser user = appUserRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        Task task = new Task();
+        task.setTitle(title);
+        task.setUser(user);
+        taskRepository.save(task);
+    }
+
+
+
 }

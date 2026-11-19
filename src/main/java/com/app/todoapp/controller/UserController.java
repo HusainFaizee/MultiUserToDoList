@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class UserController {
@@ -45,8 +47,29 @@ public class UserController {
         List<Task> tasks = taskService.getTasksByUser(id);
         model.addAttribute("user", user);
         model.addAttribute("tasks", tasks);
-        model.addAttribute("today", LocalDate.now(ZoneId.of("Europe/Berlin")));
+        LocalDate today = LocalDate.now(ZoneId.of("Europe/Berlin"));
+
+        String formattedDate = today.format(
+                DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale.ENGLISH)
+        );
+        model.addAttribute("today", formattedDate);
         return "user-tasks";
+    }
+    @PostMapping("/users/{id}/tasks")
+    public String addTask(@PathVariable Long id,
+                          @RequestParam String title){
+        taskService.addTask(title, id);
+        return "redirect:/users/" + id;
+    }
+    @GetMapping("/users/{userId}/tasks/{taskId}/toggle")
+    public String toggleTask(@PathVariable("userId") Long userId, @PathVariable("taskId") Long taskId){
+        taskService.toggleTask(taskId);
+        return "redirect:/users/" + userId;
+    }
+    @GetMapping("/users/{userId}/tasks/{taskId}/delete")
+    public String deleteTask(@PathVariable("userId") Long userId, @PathVariable("taskId") Long taskId){
+        taskService.deleteTask(taskId);
+        return "redirect:/users/" + userId;
     }
 
 
